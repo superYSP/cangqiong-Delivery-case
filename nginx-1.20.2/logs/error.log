@@ -1,3 +1,10 @@
 2022/09/13 09:52:09 [emerg] 16120#18744: CreateFile() "E:\2022新版课程\苍穹外卖项目\授课资料\day01\资料\前端运行环境\nginx-1.20.2/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
 2022/09/19 14:13:10 [emerg] 6884#1840: CreateFile() "E:\2022新版课程\苍穹外卖项目\授课资料\day01\资料\前端运行环境\nginx-1.20.2/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
 2023/03/04 10:52:01 [emerg] 12092#12960: CreateFile() "E:\授课\北京JavaEE就业406期\苍穹外卖项目\资料\day01\前端运行环境\nginx-1.20.2/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2023/10/20 10:34:22 [emerg] 8036#25668: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:36:05 [emerg] 15696#3604: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:36:09 [emerg] 12460#7192: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:36:41 [emerg] 25320#21484: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:38:19 [emerg] 21384#22668: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:38:22 [emerg] 22504#18188: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2023/10/20 10:52:53 [error] 28920#8280: *2 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "POST /api/employee/login HTTP/1.1", upstream: "http://[::1]:8080/admin/employee/login", host: "localhost:100", referrer: "http://localhost:100/"
