@@ -6,3 +6,8 @@ sky:
     database: sky_take_out
     username: root
     password: ysp666
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tSeESmsC2d3FMtNVHAY
+    access-key-secret: juFkH7vGx55WFWTHnXo8MjqSSEKxW6
+    bucket-name: hmleadnews-ysp
