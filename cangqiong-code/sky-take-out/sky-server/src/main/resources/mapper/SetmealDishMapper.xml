@@ -4,16 +4,15 @@
 <mapper namespace="com.sky.mapper.SetmealDishMapper">
 
 
-    <delete id="delete">
-        delete form setmeal_dish
-        <where>
-            dish_id in
-        <foreach collection="ids" item="id" open="(" close=")" separator=",">
-            #{id}
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal_dish (setmeal_id, dish_id, name, price, copies)
+        values
+        <foreach collection="setmealDishes" item="setmealDish" separator=",">
+                   (#{setmealDish.setmealId},#{setmealDish.dishId},#{setmealDish.name},
+                    #{setmealDish.price},#{setmealDish.copies})
         </foreach>
-        </where>
-    </delete>
-    <select id="getIdByDiahId" resultType="java.lang.Long">
+    </insert>
+    <select id="getIdByDishId" resultType="java.lang.Long">
         select setmeal_id from setmeal_dish
         <where>
             dish_id in

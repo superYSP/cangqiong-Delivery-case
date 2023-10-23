@@ -6,13 +6,12 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
-import com.sky.entity.Dish;
-import com.sky.entity.DishFlavor;
-import com.sky.entity.Employee;
+import com.sky.entity.*;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -36,6 +35,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     @Override
     @Transactional
@@ -72,7 +74,7 @@ public class DishServiceImpl implements DishService {
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
             }
         }
-        List<Long> setmealIds=setmealDishMapper.getIdByDiahId(ids);
+        List<Long> setmealIds=setmealDishMapper.getIdByDishId(ids);
         if(setmealIds!=null && setmealIds.size()>0){
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
@@ -94,11 +96,27 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    public List<Dish> getByCategoryIdOrName(Long categoryId,String name) {
+        return dishMapper.getByCategoryIdOrName(categoryId,name);
+    }
+
+
+    @Override
     public void setStatus(Integer status, long id) {
         Dish dish=new Dish();
         dish.setStatus(status);
         dish.setId(id);
         dishMapper.update(dish);
+        if(status==StatusConstant.DISABLE){
+            List<SetmealDish> setmealDishes=setmealDishMapper.getBydishId(id);
+            if(setmealDishes!=null&&setmealDishes.size()>0) {
+                for (SetmealDish setmealDish : setmealDishes) {
+                    Setmeal setmeal = setmealMapper.getById(setmealDish.getSetmealId());
+                    setmeal.setStatus(status);
+                    setmealMapper.update(setmeal);
+                }
+            }
+        }
     }
 
     @Override

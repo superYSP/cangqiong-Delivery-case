@@ -4,6 +4,7 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
@@ -66,6 +67,14 @@ public class DishController {
         log.info("根据id{}查找菜品信息",id);
         DishVO dishVO=dishService.getById(id);
         return Result.success(dishVO);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("根据套餐id或菜品名字查找菜品")
+    public Result gteByCategoryIdOrName( Long categoryId,String name) {
+        log.info("根据分类id{}查找菜品信息", categoryId);
+        List<Dish> dishes = dishService.getByCategoryIdOrName(categoryId,name);
+        return Result.success(dishes);
     }
 
     @PutMapping
