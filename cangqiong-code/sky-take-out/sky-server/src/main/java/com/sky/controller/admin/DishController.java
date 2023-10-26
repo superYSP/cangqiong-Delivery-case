@@ -15,9 +15,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/dish")
@@ -28,11 +30,16 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @PostMapping
     @ApiOperation("新增菜品")
     public Result save(@RequestBody DishDTO dishDTO){
         log.info("添加菜品{}",dishDTO);
         dishService.saveWithFlavor(dishDTO);
+        String key="dish_"+dishDTO.getCategoryId();
+        redisTemplate.delete(key);
         return Result.success();
     }
 
@@ -50,6 +57,7 @@ public class DishController {
     public Result delete(@RequestParam List<Long> ids){
         log.info("删除菜品");
         dishService.delete(ids);
+        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -58,6 +66,7 @@ public class DishController {
     public Result startOrstop(@PathVariable Integer status,long id){
         log.info("更改菜品{}状态",id);
         dishService.setStatus(status,id);
+        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -70,10 +79,13 @@ public class DishController {
     }
 
     @GetMapping("/list")
-    @ApiOperation("根据套餐id或菜品名字查找菜品")
+    @ApiOperation("根据分类id或菜品名字查找菜品")
     public Result gteByCategoryIdOrName( Long categoryId,String name) {
         log.info("根据分类id{}查找菜品信息", categoryId);
-        List<Dish> dishes = dishService.getByCategoryIdOrName(categoryId,name);
+        Dish dish=new Dish();
+        dish.setCategoryId(categoryId);
+        dish.setName(name);
+        List<Dish> dishes = dishService.list(dish);
         return Result.success(dishes);
     }
 
@@ -82,7 +94,13 @@ public class DishController {
     public Result updateDish(@RequestBody DishDTO dishDTO){
         log.info("修改菜品{}",dishDTO.getId());
         dishService.updateDish(dishDTO);
-
+        cleanCache("dish_*");
         return Result.success();
     }
+
+    private void cleanCache(String pattern){
+        Set keys=redisTemplate.keys(pattern);
+        redisTemplate.delete(keys);
+    }
 }
+

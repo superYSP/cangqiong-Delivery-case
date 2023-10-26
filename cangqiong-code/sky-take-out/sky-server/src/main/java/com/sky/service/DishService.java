@@ -30,6 +30,13 @@ public interface DishService {
     void updateDish(DishDTO dishDTO);
 
     //通过分类ID或菜品名字查找菜品
-    List<Dish> getByCategoryIdOrName(Long categoryId,String name);
+    List<Dish> list(Dish dish);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 
 }

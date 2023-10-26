@@ -12,3 +12,11 @@ sky:
     access-key-secret: juFkH7vGx55WFWTHnXo8MjqSSEKxW6
     bucket-name: hmleadnews-ysp
 #TODO 改为自己的id->key
+  redis:
+    host: localhost
+    port: 6379
+    password: ysp666
+    database: 0
+  wechat:
+    appid: wx33d18957848c036c
+    secret: 4b8c06c585494e7815561f9bd99f5392
