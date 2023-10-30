@@ -126,6 +126,7 @@ public class DishServiceImpl implements DishService {
         BeanUtils.copyProperties(dishDTO,dish);
         dishMapper.update(dish);
         dishFlavorMapper.delete(dishDTO.getId());
+        if(dishDTO.getFlavors().size()>0)
         dishFlavorMapper.insert(dishDTO.getFlavors());
     }
 
