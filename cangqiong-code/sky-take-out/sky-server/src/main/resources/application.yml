@@ -72,5 +72,6 @@ sky:
   shop:
     address: 北京市海淀区上地十街10号
   baidu:
-    ak: ZUL4WpYOpmGfPAyCOo7S02lj3IGOSykr
+    #ak密钥
+    ak:
 
